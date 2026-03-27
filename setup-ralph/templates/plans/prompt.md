@@ -4,7 +4,9 @@ Issues JSON is provided at start of context. Parse it to get all issues with the
 
 Treat open GitHub issues as the source of truth for tracked work.
 
-Before selecting work, assume the runner has synced the repo to `origin/main`. If the observed git state contradicts that assumption, stop and report the mismatch instead of working from stale local state.
+Before selecting work, assume the runner synced the repo to `origin/main` at the start of the AFK/once run. If the observed git state shows a stale branch tip or an in-progress git operation (rebase, merge, cherry-pick), stop and report it instead of working from stale local state.
+
+A dirty worktree by itself is not automatically a blocker after the run has already started. If the branch tip still matches the intended base/current loop progress, first determine whether the dirty files are the loop's own in-progress work. If they are, continue from that state or finish/stabilize that work before selecting a different task. Only stop for a dirty worktree when it looks unrelated, unexpected, or externally introduced.
 
 - Open issues are candidate work.
 - Closed issues are not candidate work unless they are reopened.
@@ -148,4 +150,6 @@ If the task is not complete, leave a comment on the GitHub issue with what was d
 
 ONLY WORK ON A SINGLE TASK.
 
-Never start work from a stale local branch tip. The intended starting point for each loop is `origin/main`, not whatever local `main` happened to contain from a previous run.
+Never start a new run from a stale local branch tip. The intended starting point at run startup is `origin/main`, not whatever local `main` happened to contain from a previous run.
+
+Within an already-started AFK run, do not treat the loop's own uncommitted changes as proof that the repo is stale. If the current worktree reflects the active task's in-progress changes, keep working on that task until it is either committed, intentionally discarded, or explicitly judged out of scope.
