@@ -47,6 +47,38 @@ ensure_origin_main() {
 tmp_dir="tmp"
 mkdir -p "$tmp_dir"
 
+save_dirty_iteration_artifacts() {
+  local iteration="$1"
+  local status_code="$2"
+  local patch_file="$tmp_dir/ralph-wip-iteration-${iteration}.patch"
+  local report_file="$tmp_dir/ralph-wip-iteration-${iteration}.txt"
+
+  {
+    git diff
+    echo
+    git diff --cached
+  } > "$patch_file"
+
+  {
+    echo "Ralph iteration left uncommitted work and was stopped."
+    echo "iteration=$iteration"
+    echo "exit_status=$status_code"
+    echo "timestamp=$(date --iso-8601=seconds 2>/dev/null || date)"
+    echo "head=$(git rev-parse HEAD)"
+    echo "branch=$(git branch --show-current)"
+    echo
+    echo "git status --short"
+    git status --short
+    echo
+    echo "last 200 lines of output"
+    printf '%s\n' "$output" | tail -n 200
+  } > "$report_file"
+
+  echo "Dirty uncommitted work detected after iteration $iteration"
+  echo "Saved patch: $patch_file"
+  echo "Saved report: $report_file"
+}
+
 ensure_origin_main
 
 last_head=$(git rev-parse HEAD)
@@ -102,6 +134,11 @@ for ((i=1; i<=iterations; i++)); do
     echo "New commit detected: $current_head"
     git push origin HEAD:main
     last_head="$current_head"
+  fi
+
+  if [ -n "$(git status --porcelain)" ]; then
+    save_dirty_iteration_artifacts "$i" "$status"
+    exit 1
   fi
 
   if [[ "$output" == *"<promise>COMPLETE</promise>"* ]]; then
