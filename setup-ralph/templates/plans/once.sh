@@ -1,5 +1,19 @@
 #!/bin/bash
-set -e
+set -euo pipefail
+
+ensure_origin_main() {
+  if [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ] || [ -f .git/MERGE_HEAD ] || [ -f .git/CHERRY_PICK_HEAD ]; then
+    echo "Error: git operation already in progress. Resolve it before running Ralph." >&2
+    exit 1
+  fi
+
+  git fetch origin --prune
+  git checkout main
+  git reset --hard origin/main
+  git clean -fd
+}
+
+ensure_origin_main
 
 issues=$(gh issue list --state open --json number,title,body,comments)
 ralph_commits=$(git log --grep="RALPH" -n 10 --format="%H%n%ad%n%B---" --date=short 2>/dev/null || echo "No RALPH commits found")

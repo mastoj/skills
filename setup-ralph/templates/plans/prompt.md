@@ -4,6 +4,8 @@ Issues JSON is provided at start of context. Parse it to get all issues with the
 
 Treat open GitHub issues as the source of truth for tracked work.
 
+Before selecting work, assume the runner has synced the repo to `origin/main`. If the observed git state contradicts that assumption, stop and report the mismatch instead of working from stale local state.
+
 - Open issues are candidate work.
 - Closed issues are not candidate work unless they are reopened.
 - Do not recreate work from closed issues unless a new open issue explicitly asks for it.
@@ -145,3 +147,5 @@ If the task is not complete, leave a comment on the GitHub issue with what was d
 # FINAL RULES
 
 ONLY WORK ON A SINGLE TASK.
+
+Never start work from a stale local branch tip. The intended starting point for each loop is `origin/main`, not whatever local `main` happened to contain from a previous run.

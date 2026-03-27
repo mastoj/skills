@@ -32,11 +32,25 @@ elif command -v timeout >/dev/null 2>&1; then
   timeout_cmd=(timeout "${RALPH_TIMEOUT_SECONDS:-900}")
 fi
 
+ensure_origin_main() {
+  if [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ] || [ -f .git/MERGE_HEAD ] || [ -f .git/CHERRY_PICK_HEAD ]; then
+    echo "Error: git operation already in progress. Resolve it before running Ralph." >&2
+    exit 1
+  fi
+
+  git fetch origin --prune
+  git checkout main
+  git reset --hard origin/main
+  git clean -fd
+}
+
 tmp_dir="tmp"
 mkdir -p "$tmp_dir"
 
 for ((i=1; i<=iterations; i++)); do
   echo "Iteration $i/$iterations"
+
+  ensure_origin_main
 
   issues_file=$(mktemp "$tmp_dir/ralph-issues.XXXXXX")
   commits_file=$(mktemp "$tmp_dir/ralph-commits.XXXXXX")

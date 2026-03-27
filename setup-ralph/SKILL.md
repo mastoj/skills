@@ -61,3 +61,4 @@ Required files:
 - This variant uses `opencode` directly (no sandbox wrapper).
 - `once.sh` runs one iteration.
 - `afk.sh` runs multiple iterations and exits early when `<promise>COMPLETE</promise>` is returned.
+- The bundled runners now hard-sync to `origin/main` before each run and refuse to start if Git is already mid-rebase, merge, or cherry-pick.
