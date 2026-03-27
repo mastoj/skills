@@ -47,10 +47,12 @@ ensure_origin_main() {
 tmp_dir="tmp"
 mkdir -p "$tmp_dir"
 
+ensure_origin_main
+
+last_head=$(git rev-parse HEAD)
+
 for ((i=1; i<=iterations; i++)); do
   echo "Iteration $i/$iterations"
-
-  ensure_origin_main
 
   issues_file=$(mktemp "$tmp_dir/ralph-issues.XXXXXX")
   commits_file=$(mktemp "$tmp_dir/ralph-commits.XXXXXX")
@@ -93,6 +95,13 @@ for ((i=1; i<=iterations; i++)); do
       echo "Iteration $i failed with exit code $status"
     fi
     continue
+  fi
+
+  current_head=$(git rev-parse HEAD)
+  if [ "$current_head" != "$last_head" ]; then
+    echo "New commit detected: $current_head"
+    git push origin HEAD:main
+    last_head="$current_head"
   fi
 
   if [[ "$output" == *"<promise>COMPLETE</promise>"* ]]; then
