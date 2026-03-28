@@ -20,6 +20,8 @@ TL;DR - build a tiny, end-to-end slice of the feature first, then expand it out.
 
 If all tasks are complete, output <promise>COMPLETE</promise>.
 
+If an umbrella issue or parent PRD has no remaining open child issues, unchecked checklist items, or explicitly referenced open blockers, treat that line of work as complete. Do not invent follow-up tasks after the tracked child slices are done.
+
 # EXPLORATION
 
 Explore the repo and fill your context window with relevant information that will allow you to complete the task.
