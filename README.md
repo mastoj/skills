@@ -8,6 +8,7 @@ scripts and templates alongside its `SKILL.md`.
 | Group          | Skill                                                                           | Purpose                                         |
 | -------------- | ------------------------------------------------------------------------------- | ----------------------------------------------- |
 | Apps           | [create-app-skill](skills/apps/create-app-skill/SKILL.md)                       | Scaffold apps using mastoj conventions.         |
+| Next.js        | [progressive-shell-adoption](skills/nextjs/progressive-shell-adoption/SKILL.md) | Adopt and verify cold-to-warm Next.js shells with upstream skills. |
 | Automation     | [setup-ralph](skills/automation/setup-ralph/SKILL.md)                           | Install Ralph planning prompts and runners.     |
 | Automation     | [run-ralph](skills/automation/run-ralph/SKILL.md)                               | Start Ralph loops through OpenClaw.             |
 | Infrastructure | [dnsimple-vercel-domain](skills/infrastructure/dnsimple-vercel-domain/SKILL.md) | Connect DNSimple subdomains to Vercel projects. |
@@ -20,6 +21,17 @@ Browse or install selected skills using the [Skills CLI](https://github.com/verc
 npx skills add mastoj/skills --list
 npx skills add mastoj/skills --skill setup-ralph run-ralph
 ```
+
+For progressive Next.js shells, install the companion skill and the standard
+Next.js workflows it selects as needed:
+
+```bash
+npx skills add mastoj/skills --skill progressive-shell-adoption
+npx skills add vercel/next.js --skill next-cache-components-adoption next-partial-prefetching-adoption next-cache-components-optimizer next-partial-prefetching-optimizer
+```
+
+The companion adds cold-to-warm cache verification and variant/identity checks;
+it references the upstream skills rather than copying their implementation rules.
 
 The category folders organize this source repository; installed skills retain
 their individual names. To check discovery from a local checkout:
