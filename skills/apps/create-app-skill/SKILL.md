@@ -1,8 +1,14 @@
+---
+name: create-app-skill
+description: Scaffold new apps with create-kor and mastoj repository conventions. Use when creating a new mastoj app or initializing an app repository.
+---
+
 # Create App Skill
 
 Use this skill to streamline the creation of new apps using standardized tools and processes in the mastoj organization. Follow the steps to initialize the app and ensure that it conforms to project conventions.
 
 ## Purpose
+
 This skill initializes a new app repository, ensuring alignment with organization-specific configuration and setup conventions. It supports customization of project structure, naming, and basic infrastructure.
 
 ---
@@ -16,4 +22,5 @@ This skill initializes a new app repository, ensuring alignment with organizatio
 3. **Initialize a Git Repository**: `git init` the root of the app.
 
 4. **Customize Metadata**: Set basic configurations like `package.json` descriptions and add the licensing files.
+
 ---

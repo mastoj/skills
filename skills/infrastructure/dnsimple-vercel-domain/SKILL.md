@@ -15,6 +15,7 @@ This skill automates the preferred flow for connecting a DNSimple-managed subdom
 4. optionally verify/wait until Vercel accepts the domain
 
 It uses:
+
 - **DNSimple API** for DNS records
 - **Vercel API** for project-domain attachment and verification
 
@@ -27,14 +28,18 @@ It does **not** depend on the legacy `dnsimple-cli` package.
 - `VERCEL_TOKEN`
 
 Optional but useful:
+
 - `VERCEL_TEAM_ID` (if you want to override auto-detection)
 
 ## Quick start
 
 Run from the repo root after `vercel link --repo`:
 
+Set `SKILL_DIR` to the absolute path of this installed skill's directory. Keep
+the target project as the working directory so its Vercel metadata is available.
+
 ```bash
-node dnsimple-vercel-domain/scripts/link-domain.mjs \
+node "$SKILL_DIR/scripts/link-domain.mjs" \
   --zone example.com \
   --subdomain app \
   --project my-vercel-project \
@@ -44,7 +49,7 @@ node dnsimple-vercel-domain/scripts/link-domain.mjs \
 Then run for real:
 
 ```bash
-node dnsimple-vercel-domain/scripts/link-domain.mjs \
+node "$SKILL_DIR/scripts/link-domain.mjs" \
   --zone example.com \
   --subdomain app \
   --project my-vercel-project \
@@ -54,15 +59,19 @@ node dnsimple-vercel-domain/scripts/link-domain.mjs \
 ## Inputs
 
 Use either:
+
 - `--zone` + `--subdomain`
 
 or:
+
 - `--domain`
 
 Required:
+
 - `--project <vercel-project-name-or-id>`
 
 Optional:
+
 - `--record-target <value>` — manual override if Vercel's API response is too weird to infer automatically
 - `--ttl <seconds>` — defaults to `300`
 - `--wait` — poll Vercel verification after updating DNS
@@ -74,7 +83,7 @@ Optional:
 ### Example 1: normal subdomain flow
 
 ```bash
-node dnsimple-vercel-domain/scripts/link-domain.mjs \
+node "$SKILL_DIR/scripts/link-domain.mjs" \
   --zone tomasjansson.dev \
   --subdomain vimangler \
   --project vimangler-web \
@@ -84,7 +93,7 @@ node dnsimple-vercel-domain/scripts/link-domain.mjs \
 ### Example 2: full domain input
 
 ```bash
-node dnsimple-vercel-domain/scripts/link-domain.mjs \
+node "$SKILL_DIR/scripts/link-domain.mjs" \
   --domain app.example.com \
   --project my-project \
   --wait
@@ -93,7 +102,7 @@ node dnsimple-vercel-domain/scripts/link-domain.mjs \
 ### Example 3: manual record-target override
 
 ```bash
-node dnsimple-vercel-domain/scripts/link-domain.mjs \
+node "$SKILL_DIR/scripts/link-domain.mjs" \
   --zone example.com \
   --subdomain app \
   --project my-project \

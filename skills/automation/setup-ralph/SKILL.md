@@ -30,10 +30,11 @@ Copy from this skill's template directory to the target repo:
 - `templates/plans/once.sh`
 - `templates/plans/afk.sh`
 
-Example copy command (run from skill directory's parent if needed):
+Run from the target repository root, with `SKILL_DIR` set to the absolute path
+of this installed skill's directory:
 
 ```bash
-cp setup-ralph/templates/plans/* ./plans/
+cp "$SKILL_DIR/templates/plans/"* ./plans/
 ```
 
 If paths differ in the current environment, locate the skill folder first and then copy those three files into `./plans`.
