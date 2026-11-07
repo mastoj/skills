@@ -12,6 +12,7 @@ scripts and templates alongside its `SKILL.md`.
 | Automation     | [setup-ralph](skills/automation/setup-ralph/SKILL.md)                           | Install Ralph planning prompts and runners.     |
 | Automation     | [run-ralph](skills/automation/run-ralph/SKILL.md)                               | Start Ralph loops through OpenClaw.             |
 | Infrastructure | [dnsimple-vercel-domain](skills/infrastructure/dnsimple-vercel-domain/SKILL.md) | Connect DNSimple subdomains to Vercel projects. |
+| Infrastructure | [cato-omarchy](skills/infrastructure/cato-omarchy/SKILL.md) | Start and verify Cato VPN on Omarchy; diagnose disconnects and firewall errors. |
 
 ## Installation
 
