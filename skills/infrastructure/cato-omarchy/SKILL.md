@@ -48,6 +48,15 @@ After starting the service, confirm it is active before running `cato-sdp start`
 If a running daemon cannot communicate with the CLI, read
 [troubleshooting.md](troubleshooting.md) before proposing a restart.
 
+After `cato-sdp start` reports a successful connection, run:
+
+```bash
+npx t3 service restart
+```
+
+Then verify the tunnel with the fresh status checks below. Run this only after
+Cato has connected successfully.
+
 When the user requests boot startup, run:
 
 ```bash
